@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teorema del Seno - Ejercicios Aleatorios</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(135deg,#0f172a,#1d4ed8);
+      color:#111827;
+    }
+    header{
+      color:white;
+      text-align:center;
+      padding:28px 15px 18px;
+    }
+    header h1{margin:0;font-size:clamp(26px,6vw,44px)}
+    header p{font-size:18px;margin:10px auto;max-width:850px}
+    .contenedor{
+      max-width:1100px;
+      margin:auto;
+      padding:15px;
+    }
+    .tarjeta{
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      margin:16px 0;
+      box-shadow:0 12px 30px rgba(0,0,0,.22);
+    }
+    .formula{
+      background:#eff6ff;
+      border-left:8px solid #2563eb;
+      padding:16px;
+      border-radius:14px;
+      font-size:22px;
+      text-align:center;
+      overflow-x:auto;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:center;
+    }
+    @media(max-width:760px){.grid{grid-template-columns:1fr}}
+    svg{
+      width:100%;
+      max-width:430px;
+      display:block;
+      margin:auto;
+      background:#f8fafc;
+      border-radius:18px;
+      border:2px solid #dbeafe;
+    }
+    .dato{
+      background:#f3f4f6;
+      padding:10px 12px;
+      border-radius:12px;
+      margin:8px 0;
+      font-size:18px;
+    }
+    .pregunta{
+      font-size:22px;
+      font-weight:bold;
+      color:#1e3a8a;
+      margin-top:14px;
+    }
+    button{
+      border:0;
+      padding:14px 18px;
+      border-radius:14px;
+      font-size:17px;
+      font-weight:bold;
+      cursor:pointer;
+      margin:7px 5px 7px 0;
+      transition:.2s;
+    }
+    button:active{transform:scale(.97)}
+    .principal{background:#2563eb;color:white}
+    .verde{background:#16a34a;color:white}
+    .rojo{background:#dc2626;color:white}
+    .gris{background:#e5e7eb;color:#111827}
+    input{
+      width:100%;
+      max-width:260px;
+      padding:13px;
+      border-radius:12px;
+      border:2px solid #cbd5e1;
+      font-size:18px;
+      margin:8px 0;
+    }
+    .respuesta{
+      display:none;
+      margin-top:15px;
+      background:#ecfdf5;
+      border-left:8px solid #16a34a;
+      padding:15px;
+      border-radius:14px;
+      font-size:18px;
+      line-height:1.55;
+    }
+    .feedback{
+      font-size:18px;
+      font-weight:bold;
+      margin-top:10px;
+    }
+    .pasos{
+      background:#fff7ed;
+      border-left:8px solid #f97316;
+      border-radius:14px;
+      padding:15px;
+      margin-top:14px;
+      line-height:1.55;
+    }
+    footer{
+      color:white;
+      text-align:center;
+      padding:20px;
+      font-size:14px;
+    }
+    .badge{
+      display:inline-block;
+      background:#dbeafe;
+      color:#1e3a8a;
+      border-radius:999px;
+      padding:8px 12px;
+      margin:4px;
+      font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📐 Teorema del Seno</h1>
+    <p>Ejercicios aleatorios con triángulos, fórmulas y respuestas paso a paso.</p>
+  </header>
+
+  <main class="contenedor">
+    <section class="tarjeta">
+      <h2>📌 Fórmula principal</h2>
+      <div class="formula">
+        \( \dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} \)
+      </div>
+      <p>
+        Se usa cuando conocemos un lado y su ángulo opuesto, y queremos calcular otro lado o ángulo de un triángulo cualquiera.
+      </p>
+      <span class="badge">Lado a ↔ Ángulo A</span>
+      <span class="badge">Lado b ↔ Ángulo B</span>
+      <span class="badge">Lado c ↔ Ángulo C</span>
+    </section>
+
+    <section class="tarjeta">
+      <h2>🎲 Ejercicio aleatorio</h2>
+      <div class="grid">
+        <div>
+          <svg viewBox="0 0 420 320" aria-label="Triángulo del ejercicio">
+            <polygon id="triangulo" points="70,260 350,260 180,60" fill="#dbeafe" stroke="#1d4ed8" stroke-width="4" />
+            <circle cx="70" cy="260" r="5" fill="#1e3a8a" />
+            <circle cx="350" cy="260" r="5" fill="#1e3a8a" />
+            <circle cx="180" cy="60" r="5" fill="#1e3a8a" />
+            <text x="55" y="288" font-size="24" font-weight="bold">A</text>
+            <text x="354" y="288" font-size="24" font-weight="bold">B</text>
+            <text x="176" y="45" font-size="24" font-weight="bold">C</text>
+            <text id="labelAB" x="190" y="285" font-size="18" fill="#111827">c</text>
+            <text id="labelAC" x="100" y="150" font-size="18" fill="#111827">b</text>
+            <text id="labelBC" x="270" y="150" font-size="18" fill="#111827">a</text>
+            <path d="M95 260 A25 25 0 0 1 84 237" fill="none" stroke="#f97316" stroke-width="4" />
+            <path d="M325 260 A25 25 0 0 0 338 238" fill="none" stroke="#f97316" stroke-width="4" />
+            <path d="M168 82 A25 25 0 0 0 197 83" fill="none" stroke="#f97316" stroke-width="4" />
+          </svg>
+        </div>
+        <div>
+          <div id="datos"></div>
+          <div class="pregunta" id="pregunta"></div>
+          <label for="respuestaUsuario"><b>Tu respuesta:</b></label><br>
+          <input id="respuestaUsuario" type="number" step="0.01" placeholder="Ej: 12.5" />
+          <br>
+          <button class="verde" onclick="verificarRespuesta()">✅ Verificar</button>
+          <button class="principal" onclick="mostrarRespuesta()">👀 Ver respuesta</button>
+          <button class="gris" onclick="nuevoEjercicio()">🔄 Nuevo ejercicio</button>
+          <div class="feedback" id="feedback"></div>
+        </div>
+      </div>
+      <div class="respuesta" id="respuesta"></div>
+    </section>
+
+    <section class="tarjeta">
+      <h2>🧠 Recordatorio rápido</h2>
+      <div class="pasos">
+        <b>Para resolver:</b><br>
+        1. Ubicar el lado y el ángulo opuesto que conocemos.<br>
+        2. Armar una proporción con el Teorema del Seno.<br>
+        3. Despejar la incógnita.<br>
+        4. Usar calculadora en modo grados.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Recurso interactivo para Matemática | Listo para subir a GitHub Pages
+  </footer>
+
+  <script>
+    let ejercicioActual = {};
+
+    function seno(grados){
+      return Math.sin(grados * Math.PI / 180);
+    }
+
+    function redondear(n){
+      return Math.round(n * 100) / 100;
+    }
+
+    function nuevoEjercicio(){
+      document.getElementById('respuesta').style.display = 'none';
+      document.getElementById('feedback').innerHTML = '';
+      document.getElementById('respuestaUsuario').value = '';
+
+      const tipo = Math.random() < 0.5 ? 'lado' : 'angulo';
+      let A, B, C, a, b, c, incognita, resultado, pasos, pregunta;
+
+      if(tipo === 'lado'){
+        A = numeroAleatorio(35,75);
+        B = numeroAleatorio(40,80);
+        C = 180 - A - B;
+        if(C < 25){ C = 35; B = 180 - A - C; }
+
+        a = numeroAleatorio(8,25);
+        b = redondear((a * seno(B)) / seno(A));
+        c = redondear((a * seno(C)) / seno(A));
+
+        const buscarB = Math.random() < 0.5;
+        incognita = buscarB ? 'b' : 'c';
+        resultado = buscarB ? b : c;
+        pregunta = `Calcular el lado ${incognita}.`;
+        pasos = buscarB
+          ? `Usamos: b/sen(B) = a/sen(A)<br>b = a · sen(B) / sen(A)<br>b = ${a} · sen(${B}°) / sen(${A}°)<br><b>b = ${resultado}</b>`
+          : `Usamos: c/sen(C) = a/sen(A)<br>c = a · sen(C) / sen(A)<br>c = ${a} · sen(${C}°) / sen(${A}°)<br><b>c = ${resultado}</b>`;
+      } else {
+        A = numeroAleatorio(35,70);
+        B = numeroAleatorio(40,75);
+        C = 180 - A - B;
+        if(C < 30){ C = 40; B = 180 - A - C; }
+
+        a = numeroAleatorio(10,28);
+        b = redondear((a * seno(B)) / seno(A));
+        c = redondear((a * seno(C)) / seno(A));
+
+        const buscarB = Math.random() < 0.5;
+        incognita = buscarB ? 'B' : 'C';
+        resultado = buscarB ? B : C;
+        pregunta = `Calcular el ángulo ${incognita}.`;
+        pasos = buscarB
+          ? `Usamos: sen(B)/b = sen(A)/a<br>sen(B) = b · sen(A) / a<br>sen(B) = ${b} · sen(${A}°) / ${a}<br><b>B ≈ ${resultado}°</b>`
+          : `Usamos: sen(C)/c = sen(A)/a<br>sen(C) = c · sen(A) / a<br>sen(C) = ${c} · sen(${A}°) / ${a}<br><b>C ≈ ${resultado}°</b>`;
+      }
+
+      ejercicioActual = {A,B,C,a,b,c,incognita,resultado,pasos,pregunta,tipo};
+      mostrarDatos();
+    }
+
+    function numeroAleatorio(min,max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function mostrarDatos(){
+      const e = ejercicioActual;
+      let html = '';
+      if(e.tipo === 'lado'){
+        html += `<div class="dato">Ángulo A = ${e.A}°</div>`;
+        html += `<div class="dato">Ángulo B = ${e.B}°</div>`;
+        html += `<div class="dato">Ángulo C = ${e.C}°</div>`;
+        html += `<div class="dato">Lado a = ${e.a}</div>`;
+      } else {
+        html += `<div class="dato">Ángulo A = ${e.A}°</div>`;
+        html += `<div class="dato">Lado a = ${e.a}</div>`;
+        if(e.incognita === 'B'){
+          html += `<div class="dato">Lado b = ${e.b}</div>`;
+        } else {
+          html += `<div class="dato">Lado c = ${e.c}</div>`;
+        }
+      }
+      document.getElementById('datos').innerHTML = html;
+      document.getElementById('pregunta').innerHTML = e.pregunta;
+
+      document.getElementById('labelBC').textContent = e.incognita === 'a' ? 'a = ?' : 'a = ' + e.a;
+      document.getElementById('labelAC').textContent = e.incognita === 'b' ? 'b = ?' : 'b = ' + e.b;
+      document.getElementById('labelAB').textContent = e.incognita === 'c' ? 'c = ?' : 'c = ' + e.c;
+    }
+
+    function mostrarRespuesta(){
+      const e = ejercicioActual;
+      const unidad = e.tipo === 'angulo' ? '°' : '';
+      document.getElementById('respuesta').innerHTML = `
+        <h3>✅ Respuesta</h3>
+        <p><b>${e.incognita} = ${e.resultado}${unidad}</b></p>
+        <div class="pasos">${e.pasos}</div>
+      `;
+      document.getElementById('respuesta').style.display = 'block';
+    }
+
+    function verificarRespuesta(){
+      const valor = parseFloat(document.getElementById('respuestaUsuario').value);
+      const e = ejercicioActual;
+      const feedback = document.getElementById('feedback');
+      if(isNaN(valor)){
+        feedback.style.color = '#dc2626';
+        feedback.innerHTML = 'Escribí una respuesta primero.';
+        return;
+      }
+      const tolerancia = e.tipo === 'angulo' ? 1 : 0.5;
+      if(Math.abs(valor - e.resultado) <= tolerancia){
+        feedback.style.color = '#16a34a';
+        feedback.innerHTML = '¡Correcto! Muy bien resuelto 🎉';
+      } else {
+        feedback.style.color = '#dc2626';
+        feedback.innerHTML = 'Todavía no. Revisá la fórmula y probá de nuevo.';
+      }
+    }
+
+    nuevoEjercicio();
+  </script>
+</body>
+</html>
